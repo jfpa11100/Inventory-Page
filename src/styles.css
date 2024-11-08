@@ -1,0 +1,165 @@
+html{
+    min-width: 375px;
+}
+
+body {
+    text-align: center;
+    color: #131921;
+    font-family: 'Ubuntu', sans-serif, arial;
+    background-color: #ffffeb;
+    height: 98dvh;
+}
+
+app-root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 99dvh;
+}
+app-header {
+    margin: 0;
+    padding: 0;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffeb;
+    width: 500px;
+    min-width: 300px;
+    padding: 45px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #131921;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+form {
+    margin-bottom: 15px;
+}
+
+.login-box input {
+    background-color: #ffffeb;
+    border: 2px solid #929292;
+    color: #023047;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 100%;
+    display: block;
+    margin: 0 auto 20px auto;
+    box-sizing: border-box;
+}
+.login-box input:focus {
+    border-color: #FFD814 ;
+    outline: none;
+    background-color: #ffffeb;
+}
+
+.login-box div{
+    color: #1f2936;
+    display: flex;
+    align-items:center;
+    justify-content:space-around;
+    gap:0px;
+    margin: 0 auto;
+}
+
+.login-box button {
+    font-size: 15px;
+    width: 120px;
+    height: 30px;
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 0;
+}
+
+.login-box a{
+    color: #023047;
+}
+
+.login-box a:hover{
+    color: #131921;
+}
+
+
+footer {
+    background-color: #002436;
+    color: #ffffeb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+}
+footer ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+footer > ul > li + li {
+    margin-left: 30px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.secondary {
+    background-color: #023047;
+    color: #ffffeb;
+    cursor: pointer;
+}
+.secondary:hover{
+    background-color: #1f2936;
+}
+
+.primary {
+    cursor: pointer;
+    background-color: #FFD814;
+    color: #131921;
+}
+
+.primary:hover{
+    color: #ffffeb;
+    background-color: #023047;
+    size: 1.1;
+    transition: 0.1;
+}
+
+.fab {
+    font-size: 30px;
+}
+
+@media screen and (max-width: 600px) {
+    .login-box{
+        width: 95%;
+        justify-self: center;
+        min-width: 355px;
+        padding: 0 0 15px 0;
+        margin: 0px;
+    }
+    header{
+        width: 100%;
+        min-width: 90%;
+        width: fit-content;
+    }
+    footer{
+        /* width: 100%; */
+        width: fit-content;
+        min-width: 90%;
+    }
+}

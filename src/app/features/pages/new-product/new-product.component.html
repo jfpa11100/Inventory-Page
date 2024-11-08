@@ -1,0 +1,15 @@
+<section>
+    <div>
+      <form>
+        <input
+          type="file"
+          name="file"
+          id="file"
+          (change)="onUpload($event)"
+          class="inputfile"
+        />
+        <label for="file">Seleccionar archivo...</label>
+      </form>
+    </div>
+    <img [src]="uploadedUrl" />
+</section>

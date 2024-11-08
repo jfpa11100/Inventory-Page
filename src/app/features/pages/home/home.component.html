@@ -1,0 +1,32 @@
+<section>
+    @for(product of this.products; track product.id){
+    <div class="product-item" (click)="onProductClick(product.id)">
+        <header>
+            <img src="{{ product.image }} " />
+        </header>
+        <main>
+            <h2>{{ product.name }}</h2>
+            <p>${{ product.price }}</p>
+            <p>${{ product.description}}</p>
+        </main>
+        <footer>
+            @if (this.user().is_admin){
+                <a (click)="onDelete(product.id)"><i class="fas fa-trash-alt"></i></a>
+                <a (click)="onEdit(product.id)"><i class="fas fa-trash-alt"></i></a>
+            }
+        </footer>
+    </div>
+    }@empty {
+    <h1>Aún no hay productos en el inventario</h1>
+    }
+    <div>
+        <button [routerLink]="['/new-product']">
+            <h2>Agrega Productos</h2>
+            <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M200 350C282.843 350 350 282.843 350 200C350 117.157 282.843 50 200 50C117.157 50 50 117.157 50 200C50 282.843 117.157 350 200 350Z" stroke="#023047" stroke-width="12" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M200 125.03V282.8" stroke="#000000" stroke-width="12" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M278.89 203.91H121.11" stroke="#000000" stroke-width="12" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
+</section>
