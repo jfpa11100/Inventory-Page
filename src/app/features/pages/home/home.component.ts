@@ -38,7 +38,29 @@ export class HomeComponent implements OnInit {
   }
   
   onDelete(productId: string){
-
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This will delete the product and his details',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#FFD814',
+      cancelButtonColor: '#023047',
+      confirmButtonText: 'Yes'
+    }).then(result => {
+      if (result.isConfirmed){
+        try {
+          this.supabaseService.deleteProduct(productId)
+          const index = this.products.findIndex(product => product.id === productId);
+          this.products.splice(index, 1);
+        } catch {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error interno',
+            text: 'No se pudo eliminar el producto'
+          });
+        }
+      }
+    });
   }
 
   onProductClick(productId: string){
