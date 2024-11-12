@@ -1,57 +1,132 @@
-import { Component } from '@angular/core';
-import { UserService } from '../../../auth/services/user.service';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
+import { v4 as uuid4 } from 'uuid';
 import Swal from 'sweetalert2';
+import { UserService } from '../../../auth/services/user.service';
 import { SupabaseService } from '../../../services/supabase-service.service';
-import { v4 as uuidv4 } from 'uuid';
+import { Product } from '../../interfaces/product.interface';
 
 @Component({
-  selector: 'app-new-product',
+  selector: 'app-create-properties',
   standalone: true,
-  imports: [],
-  templateUrl: 'new-product.component.html',
+  imports: [ReactiveFormsModule, RouterModule, CommonModule],
+  templateUrl: './new-product.component.html',
   styleUrl: './new-product.component.css',
 })
-export class NewProductComponent {
+export class NewProductComponent implements OnDestroy {
   uploadedUrl = '';
   user;
-  
+  newProductForm!: FormGroup;
+  savedProduct = false;
 
-  constructor(
-    private userService: UserService,
-    private supaseService: SupabaseService 
-  ) {
+  private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
+  private userService = inject(UserService);
+  private supabaseService = inject(SupabaseService);
+
+  constructor() {
     this.user = this.userService.getUser();
+    this.newProductForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      category: ['', Validators.required],
+      disponibility: [false, Validators.required],
+      price: [null, Validators.required],
+      stock: [null, Validators.required],
+    });
   }
 
-  onUpload(event: Event) {
+  ngOnDestroy(): void {
+    if (!this.savedProduct) {
+      this.supabaseService.deletePhoto(this.uploadedUrl);
+    }
+  }
+
+  uploadImage(event: Event) {
+    let input = event.target as HTMLInputElement;
+    if (input.files!.length <= 0) {
+      return;
+    }
     Swal.fire({
       title: 'Cargando...',
       text: 'Por favor espera',
       allowOutsideClick: false,
       didOpen: () => {
-        Swal.showLoading(); // Muestra el indicador de carga
+        Swal.showLoading(null);
       },
     });
-
-    let inputFile = event.target as HTMLInputElement;
-    if (!inputFile.files || inputFile.files.length <= 0) {
-      return;
-    }
-    const file: File = inputFile.files[0];
-    const fileName = uuidv4();
-
-    this.supaseService
+    const fileName = uuid4();
+    let file: File = input.files![0];
+    this.supabaseService
       .uploadPhoto(file, fileName)
       .then(data => {
         this.uploadedUrl = data!;
         Swal.close();
-        inputFile.value = '';
-      }).catch(() => {
+      })
+      .catch(error => {
         Swal.close();
-        Swal.fire('Error', 'Ocurrió un error al cargar la foto', 'error');
+        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          text: 'Ocurrió un error',
+        });
       });
   }
-  onCreate(){
 
+  onSubmit() {
+    if (!this.newProductForm.valid) {
+      Swal.fire({
+        icon: 'error',
+        text: 'Formulario inválido, completa todos los campos correctamente',
+      });
+      return;
+    }
+
+    const newProduct: Product = {
+      id: uuid4(),
+      name: this.newProductForm.value.name,
+      description: this.newProductForm.value.description,
+      category: this.newProductForm.value.category,
+      disponibility: this.newProductForm.value.disponibility,
+      price: this.newProductForm.value.price,
+      stock: this.newProductForm.value.stock,
+      image: this.uploadedUrl,
+    };
+    this.supabaseService
+      .createRecord('products', newProduct)
+      .then(result => {
+        Swal.fire({
+          icon: 'success',
+          text: 'Producto Guardado',
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+        this.savedProduct = true;
+        this.router.navigate(['/home']);
+      })
+      .catch(error => {
+        Swal.fire({
+          icon: 'error',
+          text: 'Ocurrió un error al guardar la propiedad',
+        });
+      });
+  }
+
+  onCancel() {
+    this.router.navigate(['/home']);
+  }
+  deleteImage() {
+    this.supabaseService.deletePhoto(this.uploadedUrl);
+    this.uploadedUrl = '';
   }
 }
