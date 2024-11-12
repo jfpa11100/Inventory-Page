@@ -1,15 +1,77 @@
 <section>
-    <div>
-      <form>
+  <div class="image-box">
+    <h2>Upload a Picture</h2>
+    <label id="addPhoto" title="Upload Image" for="file">
+      <img
+        [ngClass]="{ 'has-image': uploadedUrl }"
+        [src]="uploadedUrl || 'add.png'"
+      />
+    </label>
+    <input type="file" id="file" (change)="uploadImage($event)" />
+  </div>
+  <form [formGroup]="newProductForm">
+    <div class="inline-boxes">
+      <nav>
+        <h5>Name</h5>
         <input
-          type="file"
-          name="file"
-          id="file"
-          (change)="onUpload($event)"
-          class="inputfile"
+          type="text"
+          class="input-text"
+          placeholder="Product Name"
+          required
+          formControlName="name"
         />
-        <label for="file">Seleccionar archivo...</label>
-      </form>
+      </nav>
+      <nav>
+        <h5>Category</h5>
+        <input
+          type="text"
+          class="input-text"
+          placeholder="Category"
+          required
+          formControlName="category"
+        />
+      </nav>
+      <nav>
+        <h5>Price</h5>
+        <input
+          type="number"
+          class="input-text"
+          placeholder="Price"
+          required
+          formControlName="price"
+        />
+      </nav>
     </div>
-    <img [src]="uploadedUrl" />
+    <div class="inline-boxes">
+      <nav>
+        <h5>Product amount</h5>
+        <input
+          type="number"
+          class="input-text"
+          placeholder="Stock"
+          required
+          formControlName="stock"
+        />
+      </nav>
+      <nav class="inline-box">
+        <h5>Show in inventory</h5>
+        <input
+          type="checkbox"
+          required
+          formControlName="disponibility"
+        />
+      </nav>
+
+    </div>
+    <h5>Description</h5>
+    <textarea
+      placeholder="Description"
+      required
+      formControlName="description"
+    ></textarea>
+    <footer>
+      <button class="btn primary" (click)="onSubmit()">Crear Producto</button>
+      <button class="btn secondary" (click)="onCancel()">Cancelar</button>
+    </footer>
+  </form>
 </section>
