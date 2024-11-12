@@ -17,10 +17,11 @@ header {
 nav a{
     text-decoration: none;
     color: white;
+    cursor: pointer;
 }
 
 nav a:hover{
-    color: #023047;
+    color: #1483bb;
 }
 
 
