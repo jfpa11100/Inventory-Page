@@ -1,5 +1,6 @@
+<app-search (search)="onSearch($event)" (filterChange)="onFilterChange($event)" />
 <section>
-    @for(product of this.products; track product.id){
+    @for(product of this.products(); track product.id){
     <!-- @if(product.disponibility){ -->
         <div class="product-item" (click)="onProductClick(product.id)">
             <header>
