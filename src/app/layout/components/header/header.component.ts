@@ -11,7 +11,6 @@ import { UserService } from '../../../auth/services/user.service';
       @if(user().username){
       <nav>
         <ul>
-          <li><a [routerLink]="['/home']">Inventory</a></li>
           <li><a [routerLink]="['/home']">Inicio</a></li>
           <li><a [routerLink]="['/search']">Buscar</a></li>
           @if(user().is_admin){
