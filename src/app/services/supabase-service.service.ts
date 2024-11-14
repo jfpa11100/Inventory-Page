@@ -22,6 +22,11 @@ export class SupabaseService {
     if (error) throw error
     return data;
   }
+  async getProduct(id:string) {
+    const { data, error } = await this.supabase.from('products').select('*').eq('id', id);
+    if (error) throw error
+    return data;
+  }
 
   async getUsers() {
     const { data, error } = await this.supabase.from('users').select('*');

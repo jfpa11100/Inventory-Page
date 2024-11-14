@@ -112,11 +112,21 @@ nav{
 .input-text {
   height: 40px;
   max-height: 80px;
+  min-width: 203px;
   margin: 0 auto;
   border: 2px solid #f3f3f3;
   border-radius: 10px;
   text-align: center;
   font: inherit;
+}
+
+.input-text.sort-select{
+  min-height: 46px;
+  min-width: 203px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
 }
 
 input[type="checkbox"]{
@@ -162,24 +172,21 @@ button {
 }
 
 
-@media (max-width: 1070px) {
-  .image-box label {
-    width: 45dvh;
-    height: 40dvh;
+@media (max-width: 1150px) {
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  form{
+    width: fit-content;
   }
 }
 
 
 @media (max-width: 880px) {
-  section {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  form{
-    width: 80%;
-  }
-
   .image-box {
     display: flex;
     flex-direction: column;

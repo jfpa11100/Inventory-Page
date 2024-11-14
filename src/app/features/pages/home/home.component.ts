@@ -3,9 +3,8 @@ import { UserService } from '../../../auth/services/user.service';
 import { Product } from '../../interfaces/product.interface';
 import { SupabaseService } from '../../../services/supabase-service.service';
 import Swal from 'sweetalert2';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SearchComponent } from '../../components/search/search.component';
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +20,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private router:Router
   ) {
     this.user = this.userService.getUser();
   }
@@ -65,10 +65,11 @@ export class HomeComponent implements OnInit {
 
   onEdit(productId: string) {}
 
+
   onDelete(productId: string) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'This will delete the product and his details',
+      title: '¿Estás seguro?',
+      text: 'Se eliminara el producto y todos sus detalles',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#FFD814',
@@ -78,10 +79,12 @@ export class HomeComponent implements OnInit {
       if (result.isConfirmed) {
         try {
           this.supabaseService.deleteProduct(productId);
-          let index = this.products().findIndex(
+          let products = this.products()
+          let index = products.findIndex(
             (product) => product.id === productId
           );
-          this.products.set(this.products().splice(index, 1));
+          products.splice(index, 1)
+          this.products.set(products);
 
           index = this.allProducts.findIndex(
             (product) => product.id === productId
@@ -98,5 +101,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  onProductClick(productId: string) {}
+  onProductClick(productId: string) {
+    console.log(productId)
+    this.router.navigate(['/home', productId])
+  }
 }
