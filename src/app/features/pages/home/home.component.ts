@@ -63,7 +63,9 @@ export class HomeComponent implements OnInit {
       }));
   }
 
-  onEdit(productId: string) {}
+  onEdit(productId: string) {
+    this.router.navigate(['/edit-product', productId])
+  }
 
 
   onDelete(productId: string) {
@@ -102,7 +104,6 @@ export class HomeComponent implements OnInit {
   }
 
   onProductClick(productId: string) {
-    console.log(productId)
     this.router.navigate(['/home', productId])
   }
 }

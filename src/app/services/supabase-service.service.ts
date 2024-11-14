@@ -50,6 +50,20 @@ export class SupabaseService {
     this.deletePhoto(data[0].imageUrl)
   }
 
+  async updateRecord(newProduct: Product, productId: string){
+    const { data, error } = await this.supabase
+    .from('products')
+    .update(newProduct) 
+    .eq('id', productId)
+    .select();
+
+    if (error) {
+        throw error;
+    }
+
+    return data;
+  }
+
   async uploadPhoto(file: File, fileName: string) {
     const { error } = await this.supabase!.storage.from('inventory').upload(
       `inventory/${fileName}`,

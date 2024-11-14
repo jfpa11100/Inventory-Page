@@ -1,0 +1,77 @@
+<section [formGroup]="EditProductForm">
+  <div class="image-box">
+    <h2>Editar foto</h2>
+    <label id="addPhoto" title="Upload Image" for="file">
+      <img
+        [src]="uploadedUrl || product.image"
+      />
+    </label>
+    <input type="file" id="file" (change)="uploadImage($event)" />
+    <h2>Descripción</h2>
+    <textarea
+      placeholder="Descripción"
+      required
+      formControlName="description"
+    ></textarea>
+  </div>
+  <form>
+    <div class="inline-boxes">
+      <nav>
+        <h5>Nombre</h5>
+        <input
+          type="text"
+          class="input-text"
+          placeholder="Nombre del producto"
+          required
+          formControlName="name"
+        />
+      </nav>
+      <nav>
+        <h5>Cantidad</h5>
+        <input
+          type="number"
+          class="input-text"
+          placeholder="Cantidad"
+          required
+          formControlName="stock"
+        />
+      </nav>
+      <nav>
+        <h5>Precio</h5>
+        <input
+          type="number"
+          class="input-text"
+          placeholder="Precio"
+          required
+          formControlName="price"
+        />
+      </nav>
+    </div>
+    <div class="inline-boxes">
+      <nav>
+        <h5>Categoría</h5>
+        <select formControlName="category" class="input-text sort-select">
+          <option disabled selected>Categoría</option>
+          <option value="sports">Deportes</option>
+          <option value="accesories">Accesorios</option>
+          <option value="food">Comida</option>
+          <option value="footwear">Calzado</option>
+          <option value="clothes">Ropa</option>
+          <option value="technology">Tecnología</option>
+        </select>
+      </nav>
+      <nav class="inline-box">
+        <h5>Mostrar en inventario</h5>
+        <input
+          type="checkbox"
+          required
+          formControlName="disponibility"
+        />
+      </nav>
+    </div>
+    <footer>
+      <button class="btn primary" (click)="onSubmit()">Actualizar Producto</button>
+      <button class="btn secondary" (click)="onCancel()">Cancelar</button>
+    </footer>
+  </form>
+</section>
