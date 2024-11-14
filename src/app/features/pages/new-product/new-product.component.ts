@@ -25,7 +25,6 @@ export class NewProductComponent implements OnDestroy {
   user;
   newProductForm!: FormGroup;
   savedProduct = false;
-
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
   private userService = inject(UserService);
@@ -36,7 +35,7 @@ export class NewProductComponent implements OnDestroy {
     this.newProductForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      category: ['', Validators.required],
+      category: [null, Validators.required],
       disponibility: [false, Validators.required],
       price: [null, Validators.required],
       stock: [null, Validators.required],
@@ -81,6 +80,13 @@ export class NewProductComponent implements OnDestroy {
   }
 
   onSubmit() {
+    if (!this.uploadedUrl) {
+      Swal.fire({
+        icon: 'error',
+        text: 'Por favor agregue una imágen del producto',
+      });
+      return;
+    }
     if (!this.newProductForm.valid) {
       Swal.fire({
         icon: 'error',

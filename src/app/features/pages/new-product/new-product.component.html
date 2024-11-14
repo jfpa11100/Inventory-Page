@@ -1,4 +1,4 @@
-<section>
+<section [formGroup]="newProductForm">
   <div class="image-box">
     <h2>Subir foto</h2>
     <label id="addPhoto" title="Upload Image" for="file">
@@ -15,7 +15,7 @@
       formControlName="description"
     ></textarea>
   </div>
-  <form [formGroup]="newProductForm">
+  <form>
     <div class="inline-boxes">
       <nav>
         <h5>Nombre</h5>
@@ -28,13 +28,13 @@
         />
       </nav>
       <nav>
-        <h5>Categoria</h5>
+        <h5>Cantidad</h5>
         <input
-          type="text"
+          type="number"
           class="input-text"
-          placeholder="Categoria"
+          placeholder="Cantidad"
           required
-          formControlName="category"
+          formControlName="stock"
         />
       </nav>
       <nav>
@@ -50,14 +50,16 @@
     </div>
     <div class="inline-boxes">
       <nav>
-        <h5>Cantidad</h5>
-        <input
-          type="number"
-          class="input-text"
-          placeholder="Cantidad"
-          required
-          formControlName="stock"
-        />
+        <h5>Categoría</h5>
+        <select formControlName="category" class="input-text sort-select">
+          <option disabled selected>Categoría</option>
+          <option value="sports">Deportes</option>
+          <option value="accesories">Accesorios</option>
+          <option value="food">Comida</option>
+          <option value="footwear">Calzado</option>
+          <option value="clothes">Ropa</option>
+          <option value="technology">Tecnología</option>
+        </select>
       </nav>
       <nav class="inline-box">
         <h5>Mostrar en inventario</h5>
