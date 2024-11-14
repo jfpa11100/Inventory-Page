@@ -3,9 +3,8 @@ import { UserService } from '../../../auth/services/user.service';
 import { Product } from '../../interfaces/product.interface';
 import { SupabaseService } from '../../../services/supabase-service.service';
 import Swal from 'sweetalert2';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SearchComponent } from '../../components/search/search.component';
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +20,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private router:Router
   ) {
     this.user = this.userService.getUser();
   }
@@ -65,6 +65,7 @@ export class HomeComponent implements OnInit {
 
   onEdit(productId: string) {}
 
+
   onDelete(productId: string) {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -100,5 +101,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  onProductClick(productId: string) {}
+  onProductClick(productId: string) {
+    console.log(productId)
+    this.router.navigate(['/home', productId])
+  }
 }
