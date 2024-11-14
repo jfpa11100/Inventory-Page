@@ -1,6 +1,6 @@
 <section>
   <div class="image-box">
-    <h2>Upload a Picture</h2>
+    <h2>Subir foto</h2>
     <label id="addPhoto" title="Upload Image" for="file">
       <img
         [ngClass]="{ 'has-image': uploadedUrl }"
@@ -8,35 +8,41 @@
       />
     </label>
     <input type="file" id="file" (change)="uploadImage($event)" />
+    <h2>Descripción</h2>
+    <textarea
+      placeholder="Descripción"
+      required
+      formControlName="description"
+    ></textarea>
   </div>
   <form [formGroup]="newProductForm">
     <div class="inline-boxes">
       <nav>
-        <h5>Name</h5>
+        <h5>Nombre</h5>
         <input
           type="text"
           class="input-text"
-          placeholder="Product Name"
+          placeholder="Nombre del producto"
           required
           formControlName="name"
         />
       </nav>
       <nav>
-        <h5>Category</h5>
+        <h5>Categoria</h5>
         <input
           type="text"
           class="input-text"
-          placeholder="Category"
+          placeholder="Categoria"
           required
           formControlName="category"
         />
       </nav>
       <nav>
-        <h5>Price</h5>
+        <h5>Precio</h5>
         <input
           type="number"
           class="input-text"
-          placeholder="Price"
+          placeholder="Precio"
           required
           formControlName="price"
         />
@@ -44,31 +50,24 @@
     </div>
     <div class="inline-boxes">
       <nav>
-        <h5>Product amount</h5>
+        <h5>Cantidad</h5>
         <input
           type="number"
           class="input-text"
-          placeholder="Stock"
+          placeholder="Cantidad"
           required
           formControlName="stock"
         />
       </nav>
       <nav class="inline-box">
-        <h5>Show in inventory</h5>
+        <h5>Mostrar en inventario</h5>
         <input
           type="checkbox"
           required
           formControlName="disponibility"
         />
       </nav>
-
     </div>
-    <h5>Description</h5>
-    <textarea
-      placeholder="Description"
-      required
-      formControlName="description"
-    ></textarea>
     <footer>
       <button class="btn primary" (click)="onSubmit()">Crear Producto</button>
       <button class="btn secondary" (click)="onCancel()">Cancelar</button>

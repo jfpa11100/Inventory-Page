@@ -132,6 +132,7 @@ main {
 .secondary {
     background-color: #023047;
     color: #ffffeb;
+    font-weight: bold;
     cursor: pointer;
 }
 .secondary:hover{
@@ -141,6 +142,7 @@ main {
 .primary {
     cursor: pointer;
     background-color: #FFD814;
+    font-weight: bold;
     color: #131921;
 }
 
