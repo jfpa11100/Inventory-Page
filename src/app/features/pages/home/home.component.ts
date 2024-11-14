@@ -67,8 +67,8 @@ export class HomeComponent implements OnInit {
 
   onDelete(productId: string) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'This will delete the product and his details',
+      title: '¿Estás seguro?',
+      text: 'Se eliminara el producto y todos sus detalles',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#FFD814',
@@ -78,10 +78,12 @@ export class HomeComponent implements OnInit {
       if (result.isConfirmed) {
         try {
           this.supabaseService.deleteProduct(productId);
-          let index = this.products().findIndex(
+          let products = this.products()
+          let index = products.findIndex(
             (product) => product.id === productId
           );
-          this.products.set(this.products().splice(index, 1));
+          products.splice(index, 1)
+          this.products.set(products);
 
           index = this.allProducts.findIndex(
             (product) => product.id === productId
