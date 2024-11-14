@@ -14,7 +14,7 @@ import { SupabaseService } from '../../../services/supabase-service.service';
 import { Product } from '../../interfaces/product.interface';
 
 @Component({
-  selector: 'app-create-properties',
+  selector: 'app-new-product',
   standalone: true,
   imports: [ReactiveFormsModule, RouterModule, CommonModule],
   templateUrl: './new-product.component.html',
@@ -123,7 +123,7 @@ export class NewProductComponent implements OnDestroy {
       .catch(error => {
         Swal.fire({
           icon: 'error',
-          text: 'Ocurrió un error al guardar la propiedad',
+          text: 'Ocurrió un error al guardar el producto',
         });
       });
   }
@@ -131,6 +131,7 @@ export class NewProductComponent implements OnDestroy {
   onCancel() {
     this.router.navigate(['/home']);
   }
+  
   deleteImage() {
     this.supabaseService.deletePhoto(this.uploadedUrl);
     this.uploadedUrl = '';
