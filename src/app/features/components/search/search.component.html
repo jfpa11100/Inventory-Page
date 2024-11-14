@@ -1,0 +1,22 @@
+<section>
+    <label for="search"></label>
+    <input type="text" placeholder="Buscar..." [(ngModel)]="searchTerm" (input)="onSearch()" class="search-input">
+  
+    <nav class="filter-options">
+      <h5>Filtrar por:</h5>
+      <select [(ngModel)]="sortOrder" (change)="onFilterChange()" class="sort-select">
+        <option value="price-asc">Precio (Ascendente)</option>
+        <option value="price-desc">Precio (Descendente)</option>
+      </select>
+      <select [(ngModel)]="category" (change)="onFilterChange()" name="Categoría" class="sort-select">
+        <option disabled selected>Categoría</option>
+        <option value="sports">Deportes</option>
+        <option value="accesories">Accesorios</option>
+        <option value="food">Comida</option>
+        <option value="footwear">Calzado</option>
+        <option value="clothes">Ropa</option>
+        <option value="technology">Tecnología</option>
+      </select>
+      <a (click)="onResetFilters()" class="filter-link reset">Reiniciar filtros</a>
+    </nav>
+  </section>
