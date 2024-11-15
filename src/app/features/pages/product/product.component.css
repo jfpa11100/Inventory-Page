@@ -97,3 +97,29 @@ section {
     flex: 1;
   }
   
+
+  @media (max-width: 650px) {
+    section{
+      flex-direction: column;
+      gap: 10px;
+    }
+    .photo{
+      height: 30dvh;
+    }
+    .photo img{
+      width: auto;
+      height: 30dvh;
+      object-fit: cover;
+    }
+
+    .details h1{
+      font-size: large;
+    }
+
+    .details h2{
+      font-size: small;
+    }
+    .details h5{
+      font-size: medium;
+    }
+  }
