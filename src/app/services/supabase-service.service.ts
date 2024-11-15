@@ -30,6 +30,7 @@ export class SupabaseService {
 
   async getUsers() {
     const { data, error } = await this.supabase.from('users').select('*');
+    if (error) throw error
     return data;
   }
 

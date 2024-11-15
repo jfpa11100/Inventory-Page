@@ -26,6 +26,9 @@ export class SearchComponent {
 
 
   onResetFilters() {
+    this.sortOrder = ''
+    this.category = ''
+    this.filterChange.emit({ sortOrder: '', category: '' });
     this.search.emit('');
   }
   
