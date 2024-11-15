@@ -91,3 +91,24 @@ div button:hover {
 div button svg {
     width: 15%;
 }
+
+
+@media (max-width: 500px) {
+    .product-item{
+        width: 40dvw;
+    }
+
+    .product-item main{
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .product-item main p {
+        padding: 0px;    
+        margin: 0px;    
+    }
+    .product-item main h2 {
+        padding: 0;    
+        margin: 0;    
+    }
+}
