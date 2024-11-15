@@ -1,12 +1,11 @@
-import { Component, inject, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { v4 as uuid4 } from 'uuid';
 import Swal from 'sweetalert2';
 import { UserService } from '../../../auth/services/user.service';
@@ -14,32 +13,41 @@ import { SupabaseService } from '../../../services/supabase-service.service';
 import { Product } from '../../interfaces/product.interface';
 
 @Component({
-  selector: 'app-new-product',
+  selector: 'app-edit-product',
   standalone: true,
   imports: [ReactiveFormsModule, RouterModule, CommonModule],
-  templateUrl: './new-product.component.html',
-  styleUrl: './new-product.component.css',
+  templateUrl: './edit-product.component.html',
+  styleUrl: './edit-product.component.css',
 })
-export class NewProductComponent implements OnDestroy {
+export class EditProductComponent implements OnInit, OnDestroy {
   uploadedUrl = '';
   user;
-  newProductForm!: FormGroup;
+  EditProductForm!: FormGroup;
   savedProduct = false;
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private userService = inject(UserService);
   private supabaseService = inject(SupabaseService);
+  product!: Product;
+
+  async ngOnInit() {
+    const productId = this.route.snapshot.paramMap.get('id');
+      await this.supabaseService.getProduct(productId!)
+        .then(product => this.product = product[0])
+
+    this.EditProductForm = this.formBuilder.group({
+      name: [this.product.name],
+      description: [this.product.description],
+      category: [this.product.category],
+      disponibility: [this.product.disponibility],
+      price: [this.product.price],
+      stock: [this.product.stock],
+    });
+  }
 
   constructor() {
     this.user = this.userService.getUser();
-    this.newProductForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      category: [null, Validators.required],
-      disponibility: [false, Validators.required],
-      price: [null, Validators.required],
-      stock: [null, Validators.required],
-    });
   }
 
   ngOnDestroy(): void {
@@ -80,37 +88,22 @@ export class NewProductComponent implements OnDestroy {
   }
 
   onSubmit() {
-    if (!this.uploadedUrl) {
-      Swal.fire({
-        icon: 'error',
-        text: 'Por favor agregue una imágen del producto',
-      });
-      return;
-    }
-    if (!this.newProductForm.valid) {
-      Swal.fire({
-        icon: 'error',
-        text: 'Formulario inválido, completa todos los campos correctamente',
-      });
-      return;
-    }
-
-    const newProduct: Product = {
-      id: uuid4(),
-      name: this.newProductForm.value.name,
-      description: this.newProductForm.value.description,
-      category: this.newProductForm.value.category,
-      disponibility: this.newProductForm.value.disponibility,
-      price: this.newProductForm.value.price,
-      stock: this.newProductForm.value.stock,
-      image: this.uploadedUrl,
+    const newProduct = {
+      id: this.product.id,
+      name: this.EditProductForm.value.name || this.product.name,
+      description: this.EditProductForm.value.description || this.product.description,
+      category: this.EditProductForm.value.category || this.product.category,
+      disponibility: this.EditProductForm.value.disponibility || this.product.disponibility,
+      price: this.EditProductForm.value.price || this.product.price,
+      stock: this.EditProductForm.value.stock || this.product.stock,
+      image: this.uploadedUrl || this.product.image,
     };
     this.supabaseService
-      .createRecord('products', newProduct)
+      .updateRecord(newProduct, this.product.id)
       .then(result => {
         Swal.fire({
           icon: 'success',
-          text: 'Producto Guardado',
+          text: 'Producto Actualizado',
           timer: 1500,
           timerProgressBar: true,
           didOpen: () => {
@@ -123,7 +116,7 @@ export class NewProductComponent implements OnDestroy {
       .catch(error => {
         Swal.fire({
           icon: 'error',
-          text: 'Ocurrió un error al guardar el producto',
+          text: 'Ocurrió un error al guardar los cambios',
         });
       });
   }
@@ -131,7 +124,6 @@ export class NewProductComponent implements OnDestroy {
   onCancel() {
     this.router.navigate(['/home']);
   }
-  
   deleteImage() {
     this.supabaseService.deletePhoto(this.uploadedUrl);
     this.uploadedUrl = '';

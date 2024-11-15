@@ -1,6 +1,1 @@
-export const environment = {
-    supabase:{
-        URL: '',
-        PUBLICKEY: ''
-    }
-};
+export const environment = {};
