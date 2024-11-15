@@ -1,0 +1,99 @@
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #d9d7d7;
+    border: 1px solid rgb(185, 185, 185);
+    border-radius: 20px;
+    gap: 30px;
+  }
+  
+  .left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center; /* Alinea el h1 y la imagen en el centro de la columna */
+  }
+  
+  .left-column h1 {
+    font-size: 32px;
+    color: #000000;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .photo img {
+    border-radius: 10px;
+    width: 300px;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .details {
+    background-color: #002436;
+    padding: 30px 50px;
+    margin: 0 auto;
+    border-radius: 10px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 60%;
+    height: fit-content;
+    justify-content: flex-start;
+  }
+  
+  .details h1 {
+    font-size: 28px;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  
+  .details h2 {
+    font-size: 15px;
+    font-weight: 400;
+    text-align: left;
+    color: #ffffff;
+  }
+  
+  .details-box {
+    display: flex;
+    font-size: 20px;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 5px; /* Separa un poco más la details-box del contenido superior */
+  }
+  .details-box h2{
+    font-size: 20px;
+    font-weight: 400;
+    text-align: left;
+    color: #ffffff;
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ffffff;
+    padding: 5px 0;
+  }
+  
+  nav h2 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #ffd700;
+    margin: 0;
+  }
+  
+  nav h5 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #ffffff;
+    margin: 0;
+    text-align: right;
+    flex: 1;
+  }
+  
